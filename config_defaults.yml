@@ -79,6 +79,7 @@ Rakefile:
     - 'autoloader_layout'
     - 'documentation'
     - 'single_quote_string_with_variables'
+    - 'parameter_order'
   linter_exclusions:
     - '.vendor/**/*.pp'
     - '.bundle/**/*.pp'
@@ -511,100 +512,26 @@ Rakefile:
       enabled_cops: all
 Gemfile:
   required:
-    ':development':
+    ':test':
       # Json gems should be pinned to their default versions so that users aren't forced to recompile the native extensions.
       # See the following for a version matrix: https://stdgems.org/json/#gem-version
-      - gem: json
-        version: '= 2.6.1'
-        condition: "Gem::Requirement.create(['>= 3.1.0', '< 3.1.3']).satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))"
-      - gem: json
-        version: '= 2.6.3'
-        condition: "Gem::Requirement.create(['>= 3.2.0', '< 4.0.0']).satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))"
-        # Forces ruby to use builtin racc vs trying to compile native extensions.
-      - gem: racc
-        version: '~> 1.4.0'
-        condition: "Gem::Requirement.create(['>= 2.7.0', '< 3.0.0']).satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))"
-      - gem: deep_merge
-        version: '~> 1.2.2'
-      - gem: 'voxpupuli-puppet-lint-plugins'
+      - gem: voxpupuli-test
+        version: '~> 11.0'
+      - gem: puppet_metadata
         version: '~> 5.0'
-      - gem: 'facterdb'
-        version: '~> 2.1'
-        condition: "Gem::Requirement.create(['< 3.0.0']).satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))"
-      - gem: 'facterdb'
-        version: '~> 3.0'
-        condition: "Gem::Requirement.create(['>= 3.0.0']).satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))"
-      - gem: 'metadata-json-lint'
-        version: '~> 4.0'
-      - gem: 'json-schema'
-        version: '< 5.1.1'
-      - gem: 'rspec-puppet-facts'
-        version: '~> 4.0'
-        condition: "Gem::Requirement.create(['< 3.0.0']).satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))"
-      - gem: 'rspec-puppet-facts'
-        version: '~> 5.0'
-        condition: "Gem::Requirement.create(['>= 3.0.0']).satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))"
-      - gem: 'dependency_checker'
-        version: '~> 1.0.0'
-      - gem: 'parallel_tests'
-        version: '= 3.12.1'
-      - gem: 'pry'
-        version: '~> 0.10'
-      - gem: 'simplecov-console'
-        version: '~> 0.9'
-      - gem: 'puppet-debugger'
-        version: '~> 1.6'
-      - gem: 'rubocop'
-        version: '~> 1.50.0'
-      - gem: 'rubocop-performance'
-        version: '= 1.16.0'
-      - gem: 'rubocop-rspec'
-        version: '= 2.19.0'
-      - gem: 'rb-readline'
-        version: '= 0.5.5'
-        platforms:
-          - mswin
-          - mingw
-          - x64_mingw
-      - gem: 'bigdecimal'
-        version: '< 3.2.2'
-        platforms:
-          - mswin
-          - mingw
-          - x64_mingw
-    ':development, :release_prep':
-      - gem: 'puppet-strings'
-        version: '~> 4.0'
-      - gem: 'puppetlabs_spec_helper'
-        version: '~> 8.0'
-      - gem: 'puppet-blacksmith'
-        version: '~> 7.0'
+    ':development':
+      - gem: 'guard-rake'
+      - gem: 'overcommit'
+        version: '>= 0.39.1'
     ':system_tests':
-      - gem: 'puppet_litmus'
+      - gem: 'voxpupuli-acceptance'
         version:
-        - '~> 2.0'
-        platforms:
-          - ruby
-          - x64_mingw
-        condition: "!ENV['PUPPET_FORGE_TOKEN'].to_s.empty?"
-      - gem: 'puppet_litmus'
+          - '~> 3.5'
+    ':release':
+      - gem: 'voxpupuli-release'
         version:
-        - '~> 1.0'
-        platforms:
-          - ruby
-          - x64_mingw
-        condition: "ENV['PUPPET_FORGE_TOKEN'].to_s.empty?"
-      - gem: 'CFPropertyList'
-        version:
-        - '< 3.0.7'
-        platforms:
-          - mswin
-          - mingw
-          - x64_mingw
-      - gem: 'serverspec'
-        version: '~> 2.41'
+          - '~> 4.0'
 spec/default_facts.yml:
-  is_pe: false
   networking:
     mac: 'AA:AA:AA:AA:AA:AA'
     ip: '172.16.254.254'
