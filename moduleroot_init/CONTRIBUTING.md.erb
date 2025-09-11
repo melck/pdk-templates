@@ -1,0 +1,73 @@
+<%- name = @configs['module_metadata']['name'].split('-').last rescue '[modulename]' -%>
+# Contributing to <%= name %>
+
+## Prerequisites
+
+- Ruby 3.3.0 or higher
+- Bundler (`gem install bundler`)
+
+## Development Workflow
+
+1. Fork the repository
+2. Create a feature branch
+3. Install dependencies:
+    ```bash
+    bundle install
+    ```
+
+4. Prepare test environment:
+    ```bash
+    # Set up test fixtures
+    bundle exec rake fixtures:prep
+    ```
+
+5. Development cycle:
+    ```bash
+    # Check syntax of Ruby files and metadata
+    bundle exec rake validate
+    # Run puppet-lint
+    bundle exec rake lint
+    # Check syntax for Puppet manifests and templates
+    bundle exec rake syntax
+    # Run unit tests
+    bundle exec rake spec
+    ```
+
+6. Documentation:
+    ```bash
+    # Generate REFERENCE.md
+    bundle exec rake strings:generate:reference
+    # Validate documentation
+    bundle exec rake strings:validate:reference
+    ```
+
+7. Before submitting:
+    ```bash
+    # Run all necessary checks
+    bundle exec rake test
+    ```
+
+8. Submit your changes:
+    - Ensure all tests pass
+    - Update documentation if needed
+    - Add appropriate entries to CHANGELOG.md
+    - Create a Pull Request with a clear description of the changes
+
+## Release Process
+
+For maintainers:
+
+```bash
+# Bump version
+bundle exec rake module:bump
+# Create git tag
+bundle exec rake module:tag
+```
+
+## Additional Information
+
+- Follow the existing code style
+- Write clear commit messages
+- Add tests for new features
+- Keep changes focused and atomic
+- Document your changes
