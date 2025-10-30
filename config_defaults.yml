@@ -513,24 +513,20 @@ Rakefile:
 Gemfile:
   required:
     ':test':
-      # Json gems should be pinned to their default versions so that users aren't forced to recompile the native extensions.
-      # See the following for a version matrix: https://stdgems.org/json/#gem-version
       - gem: voxpupuli-test
-        version: '~> 11.0'
+        version: '~> 13.0'
       - gem: puppet_metadata
         version: '~> 5.0'
     ':development':
-      - gem: 'guard-rake'
-      - gem: 'overcommit'
+      - gem: guard-rake
+      - gem: overcommit
         version: '>= 0.39.1'
     ':system_tests':
-      - gem: 'voxpupuli-acceptance'
-        version:
-          - '~> 3.5'
+      - gem: voxpupuli-acceptance
+        version: '~> 4.0'
     ':release':
-      - gem: 'voxpupuli-release'
-        version:
-          - '~> 4.0'
+      - gem: voxpupuli-release
+        version: '~> 5.0'
 spec/default_facts.yml:
   networking:
     mac: 'AA:AA:AA:AA:AA:AA'
